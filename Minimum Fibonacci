@@ -1,0 +1,40 @@
+"use strict";
+var fibSequence = function(targetValue){
+  //fibSequence is the function that will build the array of Fibonacci numbers until the next fibonacci sequence is
+  //greater than the target value
+	
+	var fibArray = [];
+  var nValue = 1;
+  var nValueMinOne = 1;
+  
+  fibArray.push(nValueMinOne);
+  fibArray.push(nValue);
+  
+  while((nValue + nValueMinOne) <= targetValue){
+    var placeholder = nValue;
+    nValue += nValueMinOne;
+    fibArray.push(nValue);
+    nValueMinOne = placeholder;
+  }
+  return fibArray;
+}
+
+var findMinSequence = function(targetValue, fibArray){
+  //findMinSequence looks for the lowest amount of Fibonacci numbers to get to the target value
+  
+  fibArray = fibSequence(targetValue);
+  
+  var smallSumArray = [];
+  var runningTotal = 0;
+  
+  for(var counter = fibArray.length-1; counter >= 0 ; counter--){
+    if(fibArray[counter] + runningTotal <= targetValue){
+    	smallSumArray.push(fibArray[counter]);
+    	runningTotal+=fibArray[counter];
+    }
+  }
+  return  targetValue + " = " + smallSumArray.join(" + ");
+}
+
+console.log(findMinSequence(25347));
+//25347 = 17711 + 6765 + 610 + 233 + 21 + 5 + 2
